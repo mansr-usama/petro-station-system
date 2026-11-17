@@ -1,0 +1,75 @@
+body{
+    background-color: rgb(226, 251, 244);
+    font-family: sans-serif;
+    margin: 20px;
+
+}
+
+h1{
+    background-color: rgb(4, 130, 92);
+    color: white;
+    text-align: center;
+    padding: 20px;
+
+}
+
+h2{
+    color:rgb(4, 130, 92);
+}
+
+p{
+    font-size: 16px;
+}
+
+form{
+    background-color: white;
+    padding: 15px;
+    border: 1px solid #999999;
+    margin-bottom: 20px;
+
+}
+
+input, select {
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #777777;
+}
+
+button {
+    background-color: rgb(4, 130, 92);
+    color: white;
+    padding: 10px 15px;
+    margin: 5px;
+    border: 1px solid rgb(4, 130, 92);
+}
+
+button:hover {
+    background-color: #f2c500;
+    color: black;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+th {
+    background-color: rgb(4, 130, 92);
+    color: white;
+}
+
+th, td {
+    border: 1px solid #777777;
+    padding: 8px;
+    text-align: left;
+}
+
+a {
+    color:rgb(4, 130, 92);
+}
+
+
+
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stock- Petro Station</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>STOCK DETAILS</h1>
+    <a href="index.html">Index Page</a><br>
+    <a href="registration_page.html">Registration Page</a><br>
+    <a href="transactions.html">Transactions Page</a><br>
+    <a href="stock.html">Stock Page</a><br>
+    <a href="shift_allocation.html">Shift Allocations Page</a><br>
+
+    <h2>DAILY STOCK RECORDS</h2>
+    <form action="">
+        <input type="number" id="sd_fuel_id" placeholder="Fuel ID">
+        <input type="number" id="sd_open" placeholder="Open Stock">
+        <input type="number" id="sd_received" placeholder="Quantity Received">
+        <input type="number" id="sd_sold" placeholder="Quantity Sold">
+        <input type="date" id="sd_date">
+        <button type="button" onclick="addStockDetail()">Submit Stock Record</button>
+    </form>
+
+
+    <h2>RESTOCK FUEL</h2>
+    <form action="">
+        <input type="number" id="stocking_fuel_id" placeholder="Fuel ID">
+        <input type="number" id="stocking_quantity" placeholder="Quantity Stocked">
+        <input type="number" id="stocking_cost" placeholder="Cost Price">
+        <input type="date" id="stocking_date">
+        <button type="button" onclick="addStocking()">Submit Restock</button>
+    </form>
+
+    <h2>RESTOCK RECORDS</h2>
+    <table id="stocking_table">
+        <tr>
+            <th>Stocking ID</th>
+            <th>Fuel ID</th>
+            <th>Quantity Stocked</th>
+            <th>Cost Price</th>
+            <th>Date</th>
+        </tr>
+    </table>
+
+        <h2>STOCK RECORDS</h2>
+    <table id="stock_table">
+        <tr>
+            <th>Record ID</th>
+            <th>Fuel ID</th>
+            <th>Open Stock</th>
+            <th>Received</th>
+            <th>Sold</th>
+            <th>Closing Stock</th>
+            <th>Date</th>
+            <th>Stock Alert</th>
+        </tr>
+    </table>
+
+
+    <script>
+        var stockDetailNumber = 1;
+        var stockingNumber = 1;
+
+        // Same rule as fn_current_stock in MySQL
+        function currentStock(openStock, received, sold) {
+            return openStock + received - sold;
+        }
+
+        // Same rule as fn_stock_status_alert in MySQL
+        function stockStatusAlert(stock) {
+            if (stock > 2000) {
+                return "STOCK LEVEL - " + stock + " - STILL HIGH";
+            } else if (stock >= 500) {
+                return "STOCK LEVEL - " + stock + " - STILL OK";
+            } else {
+                return "STOCK LEVEL - " + stock + " - VERY LOW - RESTOCK NOW!";
+            }
+        }
+
+        function addStockDetail() {
+            var fuelId = document.querySelector("#sd_fuel_id").value;
+            var openStock = document.querySelector("#sd_open").value;
+            var received = document.querySelector("#sd_received").value;
+            var sold = document.querySelector("#sd_sold").value;
+            var date = document.querySelector("#sd_date").value;
+
+            if (fuelId == "" || openStock == "" || received == "" ||
+                sold == "" || date == "") {
+                alert("Please fill in all stock record fields.");
+            } else {
+                var closing = currentStock(Number(openStock), Number(received), Number(sold));
+                if (closing < 0) {
+                    alert("Quantity sold is more than the stock available.");
+                } else {
+                    var row = document.createElement("tr");
+                    row.innerHTML = "<td>" + stockDetailNumber + "</td><td>" + fuelId +
+                        "</td><td>" + openStock + "</td><td>" + received +
+                        "</td><td>" + sold + "</td><td>" + closing +
+                        "</td><td>" + date + "</td><td>" + stockStatusAlert(closing) + "</td>";
+                    document.querySelector("#stock_table").append(row);
+                    stockDetailNumber = stockDetailNumber + 1;
+                    alert("Stock record added to the table on this page.");
+                }
+            }
+        }
+
+        function addStocking() {
+            var fuelId = document.querySelector("#stocking_fuel_id").value;
+            var quantity = document.querySelector("#stocking_quantity").value;
+            var cost = document.querySelector("#stocking_cost").value;
+            var date = document.querySelector("#stocking_date").value;
+
+            if (fuelId == "" || quantity == "" || cost == "" || date == "") {
+                alert("Please fill in all restock fields.");
+            } else if (Number(quantity) <= 0) {
+                alert("Quantity stocked must be above 0.");
+            } else {
+                var row = document.createElement("tr");
+                row.innerHTML = "<td>" + stockingNumber + "</td><td>" + fuelId +
+                    "</td><td>" + quantity + "</td><td>" + cost +
+                    "</td><td>" + date + "</td>";
+                document.querySelector("#stocking_table").append(row);
+                stockingNumber = stockingNumber + 1;
+                alert("Restock added to the table on this page.");
+            }
+        }
+    </script>
+
+</body>
+</html>

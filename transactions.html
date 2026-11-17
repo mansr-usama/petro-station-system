@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactios- Petro Station</title>
+    <link rel="stylesheet" href="style.css"
+</head>
+<body>
+    <h1>TRANSACTION PAGE</h1>
+    <h2>GO TO..</h2>
+    <a href="index.html">Index Page</a><br>
+    <a href="registration_page.html">Registration Page</a><br>
+    <a href="transactions.html">Transactions Page</a><br>
+    <a href="stock.html">Stock Page</a><br>
+    <a href="shift_allocation.html">Shift Allocations Page</a><br>
+
+    <h2>REGISTER TRANSACTION </h2>
+    <form action="">
+        <input type="text" id="trans_date_time" placeholder="Date and Time e.g. 01-04-2026 08:15"><br>
+        <input type="text" id="trans_pump_no" placeholder="Pump Number">
+        <input type="number" id="trans_quantity" placeholder="Quantity (Litres)">
+        <input type="number" id="trans_price" placeholder="Price Per Litre">
+        <input type="number" id="trans_staff_id" placeholder="Staff ID">
+
+        <button type="button" onclick="addTransaction()">Submit Transaction</button>
+    </form>
+
+    <h2>TRANSACTION RECORDS</h2>
+    <table id="transaction_table">
+        <tr>
+            <th>Transaction ID</th>
+            <th>Date and Time</th>
+            <th>Pump No</th>
+            <th>Quantity (Litres)</th>
+            <th>Price Per Litre</th>
+            <th>Total Amount</th>
+            <th>Staff ID</th>
+        </tr>
+    </table>
+
+    <h2>TOTAL SALES</h2>
+    <p id="total_sales">0</p>
+
+    <script>
+        var transactionNumber = 1;
+        var totalSales = 0;
+
+        function addTransaction() {
+            var dateTime = document.querySelector("#trans_date_time").value;
+            var pumpNo = document.querySelector("#trans_pump_no").value;
+            var quantity = document.querySelector("#trans_quantity").value;
+            var price = document.querySelector("#trans_price").value;
+            var staffId = document.querySelector("#trans_staff_id").value;
+
+            if (dateTime == "" || pumpNo == "" || quantity == "" ||
+                price == "" || staffId == "") {
+                alert("Please fill in all transaction fields.");
+            } else if (Number(quantity) <= 0 || Number(price) <= 0) {
+                alert("Quantity and price must be above 0.");
+            } else {
+                var total = Number(quantity) * Number(price);
+                var row = document.createElement("tr");
+                row.innerHTML = "<td>" + transactionNumber + "</td><td>" + dateTime +
+                    "</td><td>" + pumpNo + "</td><td>" + quantity +
+                    "</td><td>" + price + "</td><td>" + total +
+                    "</td><td>" + staffId + "</td>";
+                document.querySelector("#transaction_table").append(row);
+                transactionNumber = transactionNumber + 1;
+                totalSales = totalSales + total;
+                document.querySelector("#total_sales").innerHTML = totalSales;
+                alert("Transaction added. Total amount: " + total);
+            }
+        }
+    </script>
+
+
+</table>
+    
+</body>
+</html>

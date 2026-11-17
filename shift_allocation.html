@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Shifts - Petro Station</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>SHIFT ALLOCATION PAGE</h1>
+     
+    <a href="index.html">Index Page</a><br>
+    <a href="registration_page.html">Registration Page</a><br>
+    <a href="transactions.html">Transactions Page</a><br>
+    <a href="stock.html">Stock Page</a><br>
+    <a href="shift_allocation.html">Shift Allocations Page</a><br>
+
+    <h2>ALLOCATE SHIFT</h2>
+    <form action="">
+        <input type="text" id="shift_pump_no" placeholder="Pump Number">
+        <input type="number" id="shift_staff_id" placeholder="Staff ID">
+        <select id="shift_session">
+            <option value="">Select Session</option>
+            <option value="Morning">Morning</option>
+            <option value="Afternoon">Afternoon</option>
+            <option value="Evening">Evening</option>
+        </select>
+        <input type="date" id="shift_date">
+        <button type="button" onclick="addShift()">Submit Shift</button>
+    </form>
+
+    <h2>SHIFT RECORDS </h2>
+    <table id="shift_table">
+        <tr>
+            <th>Shift ID</th>
+            <th>Pump No</th>
+            <th>Staff ID</th>
+            <th>Session</th>
+            <th>Date</th>
+        </tr>
+    </table>
+
+    <script>
+        var shiftNumber = 1;
+
+        function addShift() {
+            var pumpNo = document.querySelector("#shift_pump_no").value;
+            var staffId = document.querySelector("#shift_staff_id").value;
+            var session = document.querySelector("#shift_session").value;
+            var date = document.querySelector("#shift_date").value;
+
+            if (pumpNo == "" || staffId == "" || session == "" || date == "") {
+                alert("Please fill in all shift fields.");
+            } else {
+                var row = document.createElement("tr");
+                row.innerHTML = "<td>" + shiftNumber + "</td><td>" + pumpNo +
+                    "</td><td>" + staffId + "</td><td>" + session +
+                    "</td><td>" + date + "</td>";
+                document.querySelector("#shift_table").append(row);
+                shiftNumber = shiftNumber + 1;
+                alert("Shift added to the table on this page.");
+            }
+        }
+    </script>
+</body>
+
+</html>

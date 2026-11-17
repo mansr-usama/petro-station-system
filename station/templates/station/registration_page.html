@@ -1,0 +1,129 @@
+-{% extends "station/base.html" %}
+{% block title %}Registration - Petro Station{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">REGISTRATION PAGE</h2>
+
+<div class="row g-4 mb-5">
+    <!-- STAFF REGISTRATION -->
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-primary text-white"><strong>STAFF REGISTRATION</strong></div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ staff_form.as_p }}
+                    <button type="submit" name="submit_staff" class="btn btn-primary w-100">Submit Staff</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- FUEL REGISTRATION -->
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-primary text-white"><strong>FUEL REGISTRATION</strong></div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ fuel_form.as_p }}
+                    <button type="submit" name="submit_fuel" class="btn btn-primary w-100">Submit Fuel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- PUMP REGISTRATION -->
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-primary text-white"><strong>PUMP REGISTRATION</strong></div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ pump_form.as_p }}
+                    <button type="submit" name="submit_pump" class="btn btn-primary w-100">Submit Pump</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- STAFF RECORDS -->
+<h4>STAFF RECORDS</h4>
+<div class="table-responsive mb-4">
+    <table class="table table-bordered table-striped bg-white">
+        <thead class="table-primary">
+            <tr><th>Staff ID</th><th>Staff Name</th><th>Residence</th><th>Contact</th><th>Role</th><th>Gender</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for s in staff_list %}
+            <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.staff_name }}</td>
+                <td>{{ s.residence }}</td>
+                <td>{{ s.contact }}</td>
+                <td>{{ s.role }}</td>
+                <td>{{ s.gender }}</td>
+                <td>
+                    <a href="{% url 'staff_edit' s.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'staff_delete' s.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="7" class="text-center">No staff records yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- FUEL RECORDS -->
+<h4>FUEL RECORDS</h4>
+<div class="table-responsive mb-4">
+    <table class="table table-bordered table-striped bg-white">
+        <thead class="table-primary">
+            <tr><th>Fuel ID</th><th>Fuel Type</th><th>Price Per Litre</th><th>Current Stock</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for f in fuel_list %}
+            <tr>
+                <td>{{ f.id }}</td>
+                <td>{{ f.fuel_type }}</td>
+                <td>{{ f.price_per_litre }}</td>
+                <td>{{ f.current_stock }}</td>
+                <td>
+                    <a href="{% url 'fuel_edit' f.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'fuel_delete' f.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="text-center">No fuel records yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- PUMP RECORDS -->
+<h4>PUMP RECORDS</h4>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped bg-white">
+        <thead class="table-primary">
+            <tr><th>Pump No</th><th>Fuel</th><th>Current Quantity</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for p in pump_list %}
+            <tr>
+                <td>{{ p.pump_no }}</td>
+                <td>{{ p.fuel.fuel_type }}</td>
+                <td>{{ p.current_quantity }}</td>
+                <td>
+                    <a href="{% url 'pump_edit' p.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'pump_delete' p.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4" class="text-center">No pump records yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

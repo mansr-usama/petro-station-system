@@ -1,0 +1,43 @@
+{% extends "station/base.html" %}
+{% block title %}Shifts - Petro Station{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">SHIFT ALLOCATION PAGE</h2>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white"><strong>ALLOCATE SHIFT</strong></div>
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit Shift</button>
+        </form>
+    </div>
+</div>
+
+<h4>SHIFT RECORDS</h4>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped bg-white">
+        <thead class="table-primary">
+            <tr><th>Shift ID</th><th>Pump No</th><th>Staff</th><th>Session</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for sh in shifts %}
+            <tr>
+                <td>{{ sh.id }}</td>
+                <td>{{ sh.pump.pump_no }}</td>
+                <td>{{ sh.staff.staff_name }}</td>
+                <td>{{ sh.session }}</td>
+                <td>{{ sh.date }}</td>
+                <td>
+                    <a href="{% url 'shift_edit' sh.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'shift_delete' sh.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center">No shifts allocated yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

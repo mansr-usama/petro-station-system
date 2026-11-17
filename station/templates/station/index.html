@@ -1,0 +1,72 @@
+{% extends "station/base.html" %}
+{% load static %}
+{% block title %}Home - Petro Station Management System{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm mb-4">
+    <img src="{% static 'station/images/different-fuel-pistols-somewhere-amsterdam-city.jpg' %}" 
+         class="card-img-top" style="max-height: 350px; object-fit: cover;" 
+         alt="Fuel Pumps" onerror="this.style.display='none'">
+    <div class="card-body">
+        <h2 class="card-title">DESCRIPTION</h2>
+        <p class="card-text">
+            The Petro Station Management System is a simple system that helps the station manage 
+            fuel types, pumps, staff, shifts, fuel sales, stock levels and restocking.
+        </p>
+    </div>
+</div>
+
+<!-- Live Dashboard Counts -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3"><div class="card text-center"><div class="card-body"><h6>Staff</h6><h3>{{ staff_count }}</h3></div></div></div>
+    <div class="col-md-3"><div class="card text-center"><div class="card-body"><h6>Fuel Types</h6><h3>{{ fuel_count }}</h3></div></div></div>
+    <div class="col-md-3"><div class="card text-center"><div class="card-body"><h6>Pumps</h6><h3>{{ pump_count }}</h3></div></div></div>
+    <div class="col-md-3"><div class="card text-center"><div class="card-body"><h6>Transactions</h6><h3>{{ transaction_count }}</h3></div></div></div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white"><strong>SYSTEM USERS</strong></div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Manager</li>
+                <li class="list-group-item">Attendants</li>
+                <li class="list-group-item">Supervisors</li>
+                <li class="list-group-item">Cashier</li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white"><strong>SYSTEM ACTIVITIES</strong></div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Staff and customer registration</li>
+                <li class="list-group-item">Fuel type and pump registration</li>
+                <li class="list-group-item">Fuel sales transactions</li>
+                <li class="list-group-item">Shift allocation</li>
+                <li class="list-group-item">Daily stock records and restocking</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header bg-dark text-white"><strong>SYSTEM TABLES</strong></div>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped mb-0">
+            <thead class="table-primary">
+                <tr><th>No.</th><th>Table</th><th>Purpose</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>fuel</td><td>Stores fuel types, prices and current stock</td></tr>
+                <tr><td>2</td><td>staff</td><td>Stores staff information</td></tr>
+                <tr><td>3</td><td>pump</td><td>Stores pump details and the fuel each one dispenses</td></tr>
+                <tr><td>4</td><td>shift_allocation</td><td>Stores which staff work on which shift and pump</td></tr>
+                <tr><td>5</td><td>transactions</td><td>Stores fuel sales</td></tr>
+                <tr><td>6</td><td>stock_details</td><td>Stores daily opening and closing stock</td></tr>
+                <tr><td>7</td><td>stocking</td><td>Stores fuel deliveries and cost prices</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

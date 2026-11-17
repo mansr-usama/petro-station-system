@@ -1,0 +1,100 @@
+{% extends "station/base.html" %}
+{% block title %}Stock - Petro Station{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">STOCK DETAILS</h2>
+
+<div class="row g-4 mb-5">
+    <!-- DAILY STOCK RECORDS FORM -->
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-primary text-white"><strong>DAILY STOCK RECORDS</strong></div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ stock_detail_form.as_p }}
+                    <button type="submit" name="submit_stock_detail" class="btn btn-primary w-100">Submit Stock Record</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESTOCK FUEL FORM -->
+    <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-header bg-primary text-white"><strong>RESTOCK FUEL</strong></div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ stocking_form.as_p }}
+                    <button type="submit" name="submit_stocking" class="btn btn-primary w-100">Submit Restock</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- STOCK RECORDS TABLE -->
+<h4>STOCK RECORDS</h4>
+<div class="table-responsive mb-4">
+    <table class="table table-bordered table-striped bg-white">
+        <thead class="table-primary">
+            <tr>
+                <th>Record ID</th><th>Fuel</th><th>Open Stock</th><th>Received</th>
+                <th>Sold</th><th>Closing Stock</th><th>Date</th><th>Stock Alert</th><th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for sd in stock_details %}
+            <tr>
+                <td>{{ sd.id }}</td>
+                <td>{{ sd.fuel.fuel_type }}</td>
+                <td>{{ sd.open_stock }}</td>
+                <td>{{ sd.quantity_received }}</td>
+                <td>{{ sd.quantity_sold }}</td>
+                <td><strong>{{ sd.closing_stock }}</strong></td>
+                <td>{{ sd.date }}</td>
+                <td>
+                    <span class="badge {% if sd.closing_stock < 500 %}bg-danger{% elif sd.closing_stock <= 2000 %}bg-warning text-dark{% else %}bg-success{% endif %}">
+                        {{ sd.stock_status_alert }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{% url 'stock_detail_edit' sd.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'stock_detail_delete' sd.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="9" class="text-center">No daily stock records yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- RESTOCK RECORDS TABLE -->
+<h4>RESTOCK RECORDS</h4>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped bg-white">
+        <thead class="table-primary">
+            <tr><th>Stocking ID</th><th>Fuel</th><th>Quantity Stocked</th><th>Cost Price</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+            {% for st in stockings %}
+            <tr>
+                <td>{{ st.id }}</td>
+                <td>{{ st.fuel.fuel_type }}</td>
+                <td>{{ st.quantity_stocked }}</td>
+                <td>{{ st.cost_price }}</td>
+                <td>{{ st.date }}</td>
+                <td>
+                    <a href="{% url 'stocking_edit' st.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'stocking_delete' st.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center">No restock records yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

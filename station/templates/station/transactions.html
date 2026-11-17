@@ -1,0 +1,66 @@
+{% extends "station/base.html" %}
+{% block title %}Transactions - Petro Station{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">TRANSACTION PAGE</h2>
+
+<div class="row mb-4">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white"><strong>REGISTER TRANSACTION</strong></div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit Transaction</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white shadow-sm h-100 d-flex justify-content-center align-items-center">
+            <div class="card-body text-center">
+                <h4>TOTAL SALES</h4>
+                <h2 class="display-6 fw-bold">{{ total_sales }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4>TRANSACTION RECORDS</h4>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped bg-white">
+        <thead class="table-primary">
+            <tr>
+                <th>Transaction ID</th>
+                <th>Date and Time</th>
+                <th>Pump No</th>
+                <th>Quantity (Litres)</th>
+                <th>Price Per Litre</th>
+                <th>Total Amount</th>
+                <th>Staff</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in transactions %}
+            <tr>
+                <td>{{ t.id }}</td>
+                <td>{{ t.date_time }}</td>
+                <td>{{ t.pump.pump_no }}</td>
+                <td>{{ t.quantity_litres }}</td>
+                <td>{{ t.price_per_litre }}</td>
+                <td><strong>{{ t.total_amount }}</strong></td>
+                <td>{{ t.staff.staff_name }}</td>
+                <td>
+                    <a href="{% url 'transaction_edit' t.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'transaction_delete' t.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="8" class="text-center">No transactions recorded yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

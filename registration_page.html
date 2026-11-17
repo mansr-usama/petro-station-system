@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Petro Station</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>REGISTRATION PAGE</h1>
+    <h2>GO TO..</h2>
+    <a href="index.html">Index Page</a><br>
+    <a href="registration_page.html">Registration Page</a><br>
+    <a href="transactions.html">Transactions Page</a><br>
+    <a href="stock.html">Stock Page</a><br>
+    <a href="shift_allocation.html">Shift Allocations Page</a><br>
+
+    <h2>STAFF REGISTRATION </h2>
+    <form action="">
+        <input type="text" id="staff_name" placeholder="Staff Name">
+        <input type="text" id="staff_residence" placeholder="Residence">
+        <input type="text" id="staff_contact" placeholder="Contact (10 digits)">
+
+        <select id="staff_role">
+            <option value="">Select Role</option>
+            <option value="Attendant">Attendant</option>
+            <option value="Cashier">Cashier</option>
+            <option value="Manager">Manager</option>
+        </select>
+
+        <select id="staff_gender">
+            <option value="">Select staff_gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <button type="button" onclick="addStaff()">Submit Staff</button>
+    </form>
+
+     <h2>FUEL REGISTRATION </h2>
+     <form action="">
+        <input type="text" id="fuel_type" placeholder="Fuel Type">
+        <input type="number" id="fuel_price" placeholder="Price Per Litre">
+        <input type="number" id="fuel_stock" placeholder="current stock (Litres)">
+
+        <button type="button" onclick="addFuel()">Submit Fuel</button>
+     </form>
+
+      <h2>PUMP REGISTRATION </h2>
+      <form action="">
+        <input type="text" id="pump_no" placeholder="Pump Number eg. P001">
+        <input type="number" id="pump_fuel_id" placeholder="Fuel ID">
+        <input type="number" id="pump_quantity" placeholder="Current Quantity (Litres)">
+
+        <button type="button" onclick="addPump()">Submit Pump</button>
+      </form>
+
+
+    
+
+    <script>
+        var staffNumber =1;
+        var pumpList = [];
+        var fuelNumber = 1;
+
+        function addStaff(){
+            var name = document.querySelector("#staff_name").value;
+            var residence = document.querySelector("#staff_residence").value;
+            var contact = document.querySelector("#staff_contact").value;
+            var role = document.querySelector("#staff_role").value;
+            var gender = document.querySelector("#staff_gender").value;
+            
+            if (name =="" || residence=="" || contact==""||
+                role=="" || gender==""){
+                    alert("Please fill in all staff fields.");
+                }
+                else if (contact.length !=10){
+                    alert("Contact must be exactly 10 digits.");
+                }
+                else {
+                    var row= document.createElement("tr");
+                    row.innerHTML = "<td>" + staffNumber + "</td><td>" + name + "</td><td>" + contact + "</td><td>" + role + "</td><td>" + gender + "</td>";
+                    document.querySelector("#staff_table").append(row);
+                    staffNumber = staffNumber +1;
+                    alert("Staff has been added to the table");
+                 }
+            
+        }
+
+        function addFuel(){
+            var fuelType = document.querySelector("#fuel_type").value;
+            var price = document.querySelector("#fuel_price").value;
+            var stock = document.querySelector("#fuel_stock").value;
+
+            if (fuelType =="" || price ==""|| stock ==""){
+                alert ("Please fill in the fuel fields");
+            }
+            else if (Number(price)<=0 || Number(stock)<0){
+                alert("Price must be above 0 and stock cannot be negative");
+            }
+            else{
+                 var row = document.createElement("tr");
+                row.innerHTML = "<td>" + fuelNumber + "</td><td>" + fuelType +
+                    "</td><td>" + price + "</td><td>" + stock + "</td>";
+                document.querySelector("#fuel_table").append(row);
+                fuelNumber = fuelNumber + 1;
+                alert("Fuel added to the table on this page.");
+            }}
+
+        function addPump() {
+            var pumpNo = document.querySelector("#pump_no").value;
+            var fuelId = document.querySelector("#pump_fuel_id").value;
+            var quantity = document.querySelector("#pump_quantity").value;
+
+            if (pumpNo == "" || fuelId == "" || quantity == "") {
+                alert("Please fill in all pump fields.");
+            } else if (pumpList.includes(pumpNo)) {
+                alert("Pump number already exists. It must be unique.");
+            } else {
+                var row = document.createElement("tr");
+                row.innerHTML = "<td>" + pumpNo + "</td><td>" + fuelId +
+                    "</td><td>" + quantity + "</td>";
+                document.querySelector("#pump_table").append(row);
+                pumpList.push(pumpNo);
+                alert("Pump added to the table on this page.");
+            }
+        }
+        
+    </script>
+
+        <h2>STAFF RECORDS</h2>
+    <table id="staff_table">
+        <tr>
+            <th>Staff ID</th>
+            <th>Staff Name</th>
+            <th>Residence</th>
+            <th>Role</th>
+            <th>Gender</th>
+        </tr>
+
+    </table>
+
+    <h2>FUEL RECORDS </h2>
+    <table id="fuel_table">
+        <tr>
+            <th>Fuel ID</th>
+            <th>Fuel Type</th>
+            <th>Price Per Litre</th>
+            <th>Current Stock</th>
+        </tr>
+    </table>
+
+    <h2>PUMP RECORDS</h2>
+        <table id="pump_table">
+        <tr>
+            <th>Pump No</th>
+            <th>Fuel ID</th>
+            <th>Current Quantity</th>
+        </tr>
+    </table>
+
+
+    
+</body>
+
+</html>
