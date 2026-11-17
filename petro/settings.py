@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.1/ref/settings/
 """
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [ALLOWED_HOSTS = ['petro-station-system.onrender.com', '127.0.0.1', 'localhost']
+
+CSRF_TRUSTED_ORIGINS = ['https://petro-station-system.onrender.com']]
 
 from pathlib import Path
 
