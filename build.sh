@@ -19,6 +19,6 @@ if not Fuel.objects.exists():
     Pump.objects.create(pump_no='PUMP-02', fuel=diesel, current_quantity=4000)
 
 if not Staff.objects.exists():
-    Staff.objects.create(staff_name='Usama Mansoor', residence='Kampala', contact='0700000001', role='Manager', gender='Male')
+    Staff.objects.create(staff_name='Batte Joseph', residence='Kampala', contact='0700000001', role='Manager', gender='Male')
     Staff.objects.create(staff_name='Sarah Namukasa', residence='Entebbe', contact='0700000002', role='Attendant', gender='Female')
 "
